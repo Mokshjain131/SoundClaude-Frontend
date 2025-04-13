@@ -1,0 +1,56 @@
+.profile-container {
+  max-width: 4xl;
+  margin: 0 auto;
+}
+
+.profile-header {
+  font-size: 1.875rem;
+  font-weight: bold;
+  margin-bottom: 2rem;
+}
+
+.profile-card {
+  background: white;
+  border-radius: 0.5rem;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  padding: 1.5rem;
+}
+
+.profile-info {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+}
+
+.profile-avatar {
+  width: 6rem;
+  height: 6rem;
+  border-radius: 9999px;
+  background-color: #e5e7eb;
+}
+
+.profile-details h2 {
+  font-size: 1.5rem;
+  font-weight: 600;
+}
+
+.profile-join-date {
+  color: #6b7280;
+}
+
+.profile-tracks {
+  border-top: 1px solid #e5e7eb;
+  padding-top: 1.5rem;
+}
+
+.profile-tracks h3 {
+  font-size: 1.25rem;
+  font-weight: 600;
+  margin-bottom: 1rem;
+}
+
+.profile-tracks-empty {
+  color: #6b7280;
+}
+

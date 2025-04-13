@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
-import './Up.css';
+import '../styles/Upload.css';
+import Footer from '../components/Footer';
 
 function Upload() {
   const [selectedFile, setSelectedFile] = useState(null);
@@ -13,7 +14,7 @@ function Upload() {
     if (fileInput.files.length > 0) {
       setSelectedFile(fileInput.files[0]);
       setFileNameDisplay(`Selected file: ${fileInput.files[0].name}`);
-      setResult(null); // Clear previous results
+      setResult(null);
     } else {
       setSelectedFile(null);
       setFileNameDisplay('');
@@ -37,7 +38,7 @@ function Upload() {
       });
 
       const data = await response.json();
-      
+
       if (data.success) {
         let resultHTML = `<h3>Song Processed Successfully</h3>`;
         if (data.details && data.details.summary) {
@@ -59,18 +60,18 @@ function Upload() {
         }
         setResult({ success: true, html: resultHTML });
       } else {
-        setResult({ 
-          success: false, 
+        setResult({
+          success: false,
           error: data.error || 'Unknown error occurred',
           details: data.details
         });
       }
     } catch (error) {
       console.error('Upload error:', error);
-      setResult({ 
-        success: false, 
+      setResult({
+        success: false,
         error: 'Failed to upload file',
-        details: error.message 
+        details: error.message
       });
     } finally {
       setLoading(false);
@@ -78,7 +79,7 @@ function Upload() {
   };
 
   return (
-    <div className="upload-page">
+    <div style={{ display: 'flex', flexDirection: 'column', minHeight: '100vh', marginBottom: 0 }}>
       <div className="upload-container">
         <h2>Upload Song</h2>
         <p>Upload an MP3 file to analyze its mood, themes, and keywords.</p>
@@ -132,6 +133,7 @@ function Upload() {
           </div>
         )}
       </div>
+      <Footer />
     </div>
   );
 }

@@ -1,60 +1,73 @@
 import React from 'react';
-import TrackCard from '../components/TrackCard';
+import { Upload as UploadIcon, Search as SearchIcon } from 'lucide-react';
+import Footer from '../components/Footer';
+import '../styles/Home.css';
 
-const MOCK_TRACKS = [
-  {
-    id: 1,
-    title: "Summer Vibes",
-    artist: "DJ Wave",
-    thumbnail: "https://images.unsplash.com/photo-1470225620780-dba8ba36b745?w=300&h=200&fit=crop",
-    plays: "1.2M",
-    duration: "3:45"
-  },
-  {
-    id: 2,
-    title: "Midnight Dreams",
-    artist: "Luna Echo",
-    thumbnail: "https://images.unsplash.com/photo-1493225457124-a3eb161ffa5f?w=300&h=200&fit=crop",
-    plays: "850K",
-    duration: "4:20"
-  },
-  {
-    id: 3,
-    title: "Urban Beat",
-    artist: "Metro Sound",
-    thumbnail: "https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?w=300&h=200&fit=crop",
-    plays: "2.1M",
-    duration: "3:15"
-  }
-];
-
-const Home = () => {
+function Home() {
   return (
-    <div>
-      <section className="mb-12">
-        <h2 className="text-2xl font-bold mb-6">Trending Tracks</h2>
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {MOCK_TRACKS.map(track => (
-            <TrackCard key={track.id} track={track} />
-          ))}
-        </div>
+    <div style={{ display: 'flex', flexDirection: 'column', minHeight: '100vh' }}>
+    <div className="home">
+        {/* Hero Section */}
+      <section className="hero-section">
+        <h1>Welcome to SoundWave</h1>
+        <p className="hero-description">
+          Your ultimate platform for music sharing and discovery. Upload, share, and explore music like never before.
+        </p>
       </section>
 
-      <section className="mb-12">
-        <h2 className="text-2xl font-bold mb-6">Genre Recommendations</h2>
-        <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-4">
-          {['Electronic', 'Hip Hop', 'Rock', 'Jazz', 'Classical', 'Pop'].map(genre => (
-            <div 
-              key={genre}
-              className="bg-gradient-to-r from-orange-500 to-orange-600 rounded-lg p-6 text-white text-center cursor-pointer hover:from-orange-600 hover:to-orange-700 transition-colors"
-            >
-              <h3 className="font-semibold">{genre}</h3>
-            </div>
-          ))}
-        </div>
+        {/* Features Section */}
+      <section className="features-section">
+        <h2>Features</h2>
+        <div className="features-grid">
+          <div className="feature-card">
+            <UploadIcon className="feature-icon" />
+            <h3>Easy Upload</h3>
+            <p>Share your music with the world in just a few clicks. Support for high-quality audio formats.</p>
+          </div>
+
+          <div className="feature-card">
+            <SearchIcon className="feature-icon" />
+            <h3>Discover Music</h3>
+            <p>Explore new tracks, artists, and genres through our intelligent recommendation system.</p>
+          </div>
+          </div>
       </section>
+
+        {/* About Section */}
+      <section className="about-section">
+        <h2>About SoundWave</h2>
+        <p>
+          SoundWave is a community-driven music platform designed for both artists and listeners.
+          Whether you're a musician looking to share your creations or a music enthusiast seeking
+          new sounds, SoundWave provides the perfect space for musical discovery and sharing.
+        </p>
+      </section>
+
+        {/* Getting Started Section */}
+        <section className="getting-started-section">
+          <h2>Getting Started</h2>
+          <div className="steps-container">
+            <div className="step">
+              <span className="step-number">1</span>
+              <h3>Create Account</h3>
+              <p>Sign up for free and join our music community.</p>
+          </div>
+          <div className="step">
+              <span className="step-number">2</span>
+              <h3>Upload Music</h3>
+              <p>Share your tracks with high-quality audio support.</p>
+          </div>
+            <div className="step">
+              <span className="step-number">3</span>
+              <h3>Discover</h3>
+              <p>Explore and enjoy music from various artists.</p>
+        </div>
+    </div>
+        </section>
+      </div>
+      <Footer />
     </div>
   );
-};
+}
 
 export default Home;

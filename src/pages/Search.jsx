@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import { Search as SearchIcon } from 'lucide-react';
-import './Search.css';
+import '../styles/Search.css';
+import Footer from '../components/Footer';
+
 function Search() {
   const [searchQuery, setSearchQuery] = useState('');
   const [searching, setSearching] = useState(false);
@@ -42,7 +44,8 @@ function Search() {
   };
 
   return (
-    <div className="search-page">
+    <div style={{ display: 'flex', flexDirection: 'column', minHeight: '100vh' }}>
+      <div className="search-container">
       <div className="search-header">
         <h1>Search Songs</h1>
         <p>Find songs based on mood, theme, or keywords</p>
@@ -141,6 +144,9 @@ function Search() {
         )}
       </div>
     </div>
+      <Footer />
+    </div>
   );
 }
+
 export default Search;

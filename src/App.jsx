@@ -5,6 +5,8 @@ import Upload from './pages/Upload';
 import Search from './pages/Search';
 import Profile from './pages/Profile';
 import Auth from './pages/Auth';
+import Home from './pages/Home';
+import './styles/App.css';
 
 function App() {
   return (
@@ -13,7 +15,7 @@ function App() {
         <Navbar />
         <main className="main-content">
           <Routes>
-            <Route path="/" element={<Search />} />
+            <Route path="/" element={<Home />} />
             <Route path="/upload" element={<Upload />} />
             <Route path="/search" element={<Search />} />
             <Route path="/profile" element={<Profile />} />

@@ -1,6 +1,7 @@
 import React from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { Music2, Search, Upload, User } from 'lucide-react';
+import '../styles/Navbar.css';
 
 const Navbar = () => {
   const location = useLocation();

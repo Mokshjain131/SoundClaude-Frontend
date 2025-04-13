@@ -1,5 +1,6 @@
 import React from 'react';
 import { Play, Heart } from 'lucide-react';
+import '../styles/TrackCard.css';
 
 const TrackCard = ({ track }) => {
   return (

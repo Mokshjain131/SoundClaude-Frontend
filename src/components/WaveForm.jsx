@@ -1,5 +1,5 @@
 import React from 'react';
-import './WaveForm.css';
+import '../styles/WaveForm.css';
 
 const WaveForm = ({ waveformData, progress }) => {
   if (!waveformData || waveformData.length === 0) {
@@ -25,3 +25,4 @@ const WaveForm = ({ waveformData, progress }) => {
 };
 
 export default WaveForm;
+

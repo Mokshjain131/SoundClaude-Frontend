@@ -5,9 +5,26 @@
 }
 
 body {
-  font-family: Arial, sans-serif;
-  background-color: #f5f5f5;
+  margin: 0;
+  padding: 0;
+  min-height: 100vh;
+  line-height: 1.5;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  background-color: #f9fafb;
+  color: #111827;
 }
+
+button {
+  cursor: pointer;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
 :root {
   --color-primary: #f97316;
   --color-primary-hover: #ea580c;
@@ -33,7 +50,6 @@ body {
   min-height: 100vh;
 }
 
-/* Navigation */
 .nav {
   top: 0;
   left: 0;
@@ -54,7 +70,6 @@ body {
   display: flex;
   align-items: center;
   gap: 0.5rem;
-  text-decoration: none;
 }
 
 .nav-logo-icon {
@@ -79,7 +94,6 @@ body {
   align-items: center;
   gap: 0.25rem;
   color: var(--color-gray-600);
-  text-decoration: none;
 }
 
 .nav-link.active {
@@ -91,13 +105,11 @@ body {
   height: 1.25rem;
 }
 
-/* Main Content */
 .main {
   padding-top: 5rem;
   padding-bottom: 8rem;
 }
 
-/* Player */
 .player {
   position: fixed;
   bottom: 0;
@@ -160,7 +172,6 @@ body {
   border-radius: 9999px;
   background-color: var(--color-primary);
   color: var(--color-white);
-  cursor: pointer;
   border: none;
 }
 
@@ -176,7 +187,6 @@ body {
   justify-content: flex-end;
 }
 
-/* Track Card */
 .track-card {
   background-color: var(--color-white);
   border-radius: 0.5rem;
@@ -208,7 +218,6 @@ body {
   border-radius: 9999px;
   color: var(--color-white);
   border: none;
-  cursor: pointer;
 }
 
 .track-card-play:hover {
@@ -243,7 +252,6 @@ body {
   color: var(--color-gray-500);
 }
 
-/* Auth Form */
 .auth-container {
   max-width: 28rem;
   margin: 0 auto;
@@ -308,7 +316,6 @@ body {
   color: var(--color-white);
   border: none;
   border-radius: 0.5rem;
-  cursor: pointer;
 }
 
 .auth-button:hover {
@@ -325,7 +332,6 @@ body {
   color: var(--color-primary);
   background: none;
   border: none;
-  cursor: pointer;
 }
 
 .auth-switch-button:hover {

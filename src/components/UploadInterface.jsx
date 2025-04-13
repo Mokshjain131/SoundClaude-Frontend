@@ -1,87 +1,109 @@
 import React, { useState } from 'react';
-import { Search as SearchIcon, Upload as UploadIcon } from 'lucide-react';
+import { Upload as UploadIcon, Music, X } from 'lucide-react';
+import WaveForm from './WaveForm';
+import '../styles/UploadInterface.css';
 
-const UploadInterface = ({ onUpload, onSearch }) => {
+const UploadInterface = () => {
   const [file, setFile] = useState(null);
-  const [searchQuery, setSearchQuery] = useState('');
-  const [isProcessing, setIsProcessing] = useState(false);
-
-  const handleFileChange = (e) => {
-    setFile(e.target.files[0]);
+  const [trackInfo, setTrackInfo] = useState({
+    title: '',
+    artist: '',
+    genre: ''
+  });
+  const handleFileChange = (event) => {
+    const selectedFile = event.target.files[0];
+    if (selectedFile) {
+      setFile(selectedFile);
+    }
   };
 
-  const handleUpload = async () => {
-    if (!file) {
-      alert('Please select a file first');
-      return;
-    }
-    setIsProcessing(true);
-    await onUpload(file);
-    setIsProcessing(false);
+  const handleRemoveFile = () => {
+    setFile(null);
   };
 
-  const handleSearch = () => {
-    if (!searchQuery.trim()) {
-      alert('Please enter a search query');
-      return;
-    }
-    onSearch(searchQuery);
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    console.log('Uploading:', { file, trackInfo });
   };
 
   return (
-    <div className="max-w-4xl mx-auto p-6 bg-white rounded-lg shadow-md">
-      {/* Upload Section */}
-      <div className="mb-8">
-        <h2 className="text-2xl font-bold mb-4">Upload Song</h2>
-        <div className="flex flex-col items-center">
-          <UploadIcon className="w-12 h-12 text-blue-500 mb-4" />
-          <label className="cursor-pointer bg-blue-500 text-white px-6 py-3 rounded-lg hover:bg-blue-600">
-            Select MP3 File
-            <input 
+    <div className="upload-interface">
+      <div className="upload-dropzone">
+        <input
               type="file" 
-              className="hidden" 
-              accept="audio/mp3,audio/*" 
+          id="file-upload"
+          className="file-input"
               onChange={handleFileChange}
+          accept="audio/*"
             />
-          </label>
-          {file && (
-            <p className="mt-2 text-gray-600">Selected: {file.name}</p>
-          )}
-          <button 
-            onClick={handleUpload}
-            disabled={isProcessing}
-            className="mt-4 bg-blue-600 text-white px-6 py-2 rounded-lg hover:bg-blue-700 disabled:bg-gray-400"
-          >
-            {isProcessing ? 'Processing...' : 'Upload and Process'}
-          </button>
+        <label htmlFor="file-upload" className="dropzone-label">
+          {file ? (
+            <div className="file-preview">
+              <Music size={24} />
+              <span>{file.name}</span>
+              <button onClick={handleRemoveFile} className="remove-file">
+                <X size={20} />
+              </button>
         </div>
-      </div>
+          ) : (
+            <>
+              <UploadIcon size={48} />
+              <span>Drop your audio file here or click to browse</span>
+              <span className="dropzone-hint">MP3, WAV files supported</span>
+            </>
+          )}
+        </label>
+          </div>
 
-      {/* Search Section */}
-      <div className="border-t pt-6">
-        <h2 className="text-2xl font-bold mb-4">Search for Songs</h2>
-        <div className="flex">
-          <div className="relative flex-grow">
-            <SearchIcon className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" />
+      {file && (
+        <form onSubmit={handleSubmit} className="track-form">
+          <div className="form-group">
+            <label htmlFor="title">Track Title</label>
             <input
               type="text"
-              placeholder="Search by mood, theme or keywords..."
-              value={searchQuery}
-              onChange={(e) => setSearchQuery(e.target.value)}
-              onKeyPress={(e) => e.key === 'Enter' && handleSearch()}
-              className="w-full pl-10 pr-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+              id="title"
+              value={trackInfo.title}
+              onChange={(e) => setTrackInfo({ ...trackInfo, title: e.target.value })}
+              required
             />
           </div>
-          <button 
-            onClick={handleSearch}
-            className="ml-2 bg-blue-600 text-white px-6 py-2 rounded-lg hover:bg-blue-700"
-          >
-            Search
-          </button>
-        </div>
+
+          <div className="form-group">
+            <label htmlFor="artist">Artist Name</label>
+            <input
+              type="text"
+              id="artist"
+              value={trackInfo.artist}
+              onChange={(e) => setTrackInfo({ ...trackInfo, artist: e.target.value })}
+              required
+            />
       </div>
+
+          <div className="form-group">
+            <label htmlFor="genre">Genre</label>
+            <select
+              id="genre"
+              value={trackInfo.genre}
+              onChange={(e) => setTrackInfo({ ...trackInfo, genre: e.target.value })}
+              required
+            >
+              <option value="">Select a genre</option>
+              <option value="electronic">Electronic</option>
+              <option value="rock">Rock</option>
+              <option value="hiphop">Hip Hop</option>
+              <option value="jazz">Jazz</option>
+              <option value="classical">Classical</option>
+            </select>
+    </div>
+
+          <button type="submit" className="upload-button">
+            Upload Track
+          </button>
+        </form>
+      )}
     </div>
   );
 };
 
 export default UploadInterface;
+
