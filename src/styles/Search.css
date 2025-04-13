@@ -57,7 +57,7 @@
 
 .search-button {
   padding: 12px 24px;
-  background-color: #4285f4;
+  background-color: #A41034; /* This color was changed from blue to #A41034 for a different aesthetic */
   color: white;
   border: none;
   border-radius: 4px;
@@ -67,7 +67,7 @@
 }
 
 .search-button:hover {
-  background-color: #3367d6;
+  background-color: #A41034; /* This color was changed from blue to #A41034 for a different aesthetic */
 }
 
 .search-button:disabled {
@@ -85,7 +85,7 @@
 
 .loader {
   border: 3px solid #f3f3f3;
-  border-top: 3px solid #4285f4;
+  border-top: 3px solid #A41034; /* This color was changed from blue to #A41034 for a different aesthetic */
   border-radius: 50%;
   width: 24px;
   height: 24px;
@@ -143,7 +143,7 @@
 }
 
 .similarity-score {
-  color: #4285f4;
+  color: #A41034; /* This color was changed from blue to #A41034 for a different aesthetic */
   font-weight: bold;
 }
 
@@ -159,7 +159,7 @@
 .download-button {
   display: inline-block;
   padding: 8px 16px;
-  background-color: #4285f4;
+  background-color: #A41034; /* This color was changed from blue to #A41034 for a different aesthetic */
   color: white;
   text-decoration: none;
   border-radius: 4px;
@@ -167,7 +167,7 @@
 }
 
 .download-button:hover {
-  background-color: #3367d6;
+  background-color: #A41034; /* This color was changed from blue to #A41034 for a different aesthetic */
 }
 
 .tags-section {
