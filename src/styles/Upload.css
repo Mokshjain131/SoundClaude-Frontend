@@ -45,13 +45,13 @@
 }
 
 .upload-dropzone:hover {
-    border-color: #4285f4;
+    border-color: #a41034;
     background: #f9fafb;
     transition: all 0.2s ease;
 }
 
 .dropzone-label svg {
-    color: #4285f4;
+    color: #a41034;
     width: 48px;
     height: 48px;
 }
@@ -109,14 +109,15 @@
 
 .form-group input:focus,
 .form-group select:focus {
-    border-color: #4285f4;
+    border-color: #a41034;
     background: white;
+    box-shadow: 0 0 0 2px rgba(164, 16, 52, 0.1);
 }
 
 .upload-button {
     margin-top: 1rem;
     padding: 0.75rem 1.5rem;
-    background: #4285f4;
+    background: #a41034;
     color: white;
     border: none;
     border-radius: 0.5rem;
@@ -127,7 +128,7 @@
 }
 
 .upload-button:hover {
-    background: #3b7de3;
+    background: #8c0d2b;
 }
 
 .waveform-preview {
@@ -194,3 +195,4 @@
 .error-message {
     color: #f44336;
 }
+
