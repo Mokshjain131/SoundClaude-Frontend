@@ -9,8 +9,8 @@ body {
   background-color: #f5f5f5;
 }
 :root {
-  --color-primary: #f97316;
-  --color-primary-hover: #ea580c;
+  --color-primary: #dc143c;
+  --color-primary-hover: #b01030;
   --color-gray-50: #f9fafb;
   --color-gray-100: #f3f4f6;
   --color-gray-200: #e5e7eb;
@@ -66,6 +66,7 @@ body {
 .nav-logo-text {
   font-size: 1.25rem;
   font-weight: bold;
+  color: black;
 }
 
 .nav-links {
