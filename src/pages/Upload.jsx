@@ -1,59 +1,136 @@
-import React from 'react';
-import { Upload as UploadIcon } from 'lucide-react';
+import React, { useState } from 'react';
+import './Up.css';
 
 function Upload() {
-  return (
-    <div className="max-w-4xl mx-auto">
-      <h1 className="text-3xl font-bold mb-8">Upload Track</h1>
+  const [selectedFile, setSelectedFile] = useState(null);
+  const [loading, setLoading] = useState(false);
+  const [result, setResult] = useState(null);
+  const [fileNameDisplay, setFileNameDisplay] = useState('');
+  const serverUrl = 'http://localhost:3000';
+
+  const handleFileChange = (event) => {
+    const fileInput = event.target;
+    if (fileInput.files.length > 0) {
+      setSelectedFile(fileInput.files[0]);
+      setFileNameDisplay(`Selected file: ${fileInput.files[0].name}`);
+      setResult(null); // Clear previous results
+    } else {
+      setSelectedFile(null);
+      setFileNameDisplay('');
+    }
+  };
+
+  const handleUpload = async () => {
+    if (!selectedFile) {
+      alert('Please select a file first');
+      return;
+    }
+
+    const formData = new FormData();
+    formData.append('songFile', selectedFile);
+    setLoading(true);
+
+    try {
+      const response = await fetch(`${serverUrl}/upload`, {
+        method: 'POST',
+        body: formData
+      });
+
+      const data = await response.json();
       
-      <div className="bg-white rounded-lg shadow p-6">
-        <div className="border-2 border-dashed border-gray-300 rounded-lg p-8 text-center">
-          <UploadIcon className="w-12 h-12 mx-auto mb-4 text-gray-400" />
-          <h2 className="text-xl font-semibold mb-2">Drag and drop your track</h2>
-          <p className="text-gray-600 mb-4">or click to select a file</p>
+      if (data.success) {
+        let resultHTML = `<h3>Song Processed Successfully</h3>`;
+        if (data.details && data.details.summary) {
+          resultHTML += `<p><strong>Summary:</strong> ${data.details.summary}</p>`;
+        }
+        if (data.details && data.details.keywords) {
+          resultHTML += `<p><strong>Keywords:</strong></p><div>`;
+          Object.values(data.details.keywords).forEach(keyword => {
+            resultHTML += `<span class="tag">${keyword}</span> `;
+          });
+          resultHTML += `</div>`;
+        }
+        if (data.details && data.details['ddex moods']) {
+          resultHTML += `<p><strong>Moods:</strong></p><div>`;
+          Object.values(data.details['ddex moods']).forEach(mood => {
+            resultHTML += `<span class="tag mood-tag">${mood}</span> `;
+          });
+          resultHTML += `</div>`;
+        }
+        setResult({ success: true, html: resultHTML });
+      } else {
+        setResult({ 
+          success: false, 
+          error: data.error || 'Unknown error occurred',
+          details: data.details
+        });
+      }
+    } catch (error) {
+      console.error('Upload error:', error);
+      setResult({ 
+        success: false, 
+        error: 'Failed to upload file',
+        details: error.message 
+      });
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  return (
+    <div className="upload-page">
+      <div className="upload-container">
+        <h2>Upload Song</h2>
+        <p>Upload an MP3 file to analyze its mood, themes, and keywords.</p>
+        
+        <div className="form-group" style={{ textAlign: 'center' }}>
+          <div className="upload-icon">🎵</div>
+          <label 
+            htmlFor="songFile" 
+            className="file-input-label"
+          >
+            Select MP3 File
+          </label>
           <input 
             type="file" 
-            accept="audio/*"
-            className="hidden" 
-            id="track-upload"
+            id="songFile" 
+            accept="audio/mp3,audio/*" 
+            style={{ display: 'none' }}
+            onChange={handleFileChange}
           />
-          <label 
-            htmlFor="track-upload"
-            className="inline-block bg-blue-600 text-white px-6 py-2 rounded-lg hover:bg-blue-700 cursor-pointer"
-          >
-            Select File
-          </label>
+          <div id="fileNameDisplay">{fileNameDisplay}</div>
         </div>
-        
-        <div className="mt-6">
-          <div className="mb-4">
-            <label className="block text-sm font-medium text-gray-700 mb-1">
-              Track Title
-            </label>
-            <input 
-              type="text"
-              className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-              placeholder="Enter track title"
-            />
-          </div>
-          
-          <div className="mb-4">
-            <label className="block text-sm font-medium text-gray-700 mb-1">
-              Description
-            </label>
-            <textarea 
-              className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-              rows="4"
-              placeholder="Enter track description"
-            />
-          </div>
-          
+
+        <div style={{ textAlign: 'center' }}>
           <button 
-            className="w-full bg-blue-600 text-white px-6 py-2 rounded-lg hover:bg-blue-700"
+            onClick={handleUpload}
+            className="upload-button"
+            disabled={loading || !selectedFile}
           >
-            Upload Track
+            {loading ? 'Uploading...' : 'Upload and Process'}
           </button>
         </div>
+
+        {loading && (
+          <div className="loading-indicator">
+            <div className="loader"></div>
+            <span>Processing your song... (this may take up to a minute)</span>
+          </div>
+        )}
+
+        {result && (
+          <div className={`result-container ${result.success ? 'success' : 'error'}`}>
+            {result.success ? (
+              <div dangerouslySetInnerHTML={{ __html: result.html }} />
+            ) : (
+              <div className="error-message">
+                <h3>Upload Failed</h3>
+                <p>{result.error}</p>
+                {result.details && <p>{result.details}</p>}
+              </div>
+            )}
+          </div>
+        )}
       </div>
     </div>
   );

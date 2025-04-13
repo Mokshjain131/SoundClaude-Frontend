@@ -1,75 +1,146 @@
 import React, { useState } from 'react';
-import TrackCard from '../components/TrackCard';
 import { Search as SearchIcon } from 'lucide-react';
-
-const Search = () => {
+import './Search.css';
+function Search() {
   const [searchQuery, setSearchQuery] = useState('');
-  const [selectedGenre, setSelectedGenre] = useState('all');
+  const [searching, setSearching] = useState(false);
+  const [results, setResults] = useState([]);
+  const serverUrl = 'http://localhost:3000';
 
-  const MOCK_SEARCH_RESULTS = [
-    {
-      id: 1,
-      title: "Electronic Dreams",
-      artist: "Synth Master",
-      thumbnail: "https://images.unsplash.com/photo-1470225620780-dba8ba36b745?w=300&h=200&fit=crop",
-      plays: "500K",
-      duration: "3:30"
-    },
-    {
-      id: 2,
-      title: "Acoustic Session",
-      artist: "Guitar Hero",
-      thumbnail: "https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?w=300&h=200&fit=crop",
-      plays: "200K",
-      duration: "4:15"
+  const handleSearch = async () => {
+    if (!searchQuery.trim()) {
+      alert('Please enter a search query');
+      return;
     }
-  ];
 
-  const GENRES = [
-    'All', 'Electronic', 'Rock', 'Hip Hop', 'Jazz', 'Classical', 'Pop', 'Folk'
-  ];
+    setSearching(true);
+    try {
+      const response = await fetch(`${serverUrl}/search?q=${encodeURIComponent(searchQuery)}`);
+      const data = await response.json();
+      if (data.success && data.results) {
+        setResults(data.results);
+      }
+    } catch (error) {
+      console.error('Search error:', error);
+      alert('Error performing search');
+    } finally {
+      setSearching(false);
+    }
+  };
+
+  const cleanFileName = (filename) => {
+    return filename
+      .replace(/%26/g, '&')
+      .replace(/%20/g, ' ')
+      .replace(/%5B/g, '[')
+      .replace(/%5D/g, ']')
+      .replace(/\.mp3$/, '')
+      .replace(/^\d+-/, '')
+      .replace(/\s*-\s*-\s*/g, ' - ')
+      .replace(/\s+/g, ' ')
+      .trim();
+  };
 
   return (
-    <div className="max-w-6xl mx-auto">
-      <div className="mb-8">
-        <div className="relative">
-          <SearchIcon className="absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" />
+    <div className="search-page">
+      <div className="search-header">
+        <h1>Search Songs</h1>
+        <p>Find songs based on mood, theme, or keywords</p>
+      </div>
+
+      <div className="search-box">
+        <div className="search-input-container">
+          <SearchIcon className="search-icon" />
           <input
             type="text"
-            placeholder="Search for tracks, artists, or albums..."
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
-            className="w-full pl-12 pr-4 py-3 rounded-lg border border-gray-300 focus:outline-none focus:border-orange-500"
+            placeholder="Search for songs..."
+            className="search-input"
+            onKeyPress={(e) => e.key === 'Enter' && handleSearch()}
           />
         </div>
-      </div>
-
-      <div className="mb-8">
-        <h3 className="text-lg font-semibold mb-4">Filter by Genre</h3>
-        <div className="flex flex-wrap gap-2">
-          {GENRES.map(genre => (
-            <button
-              key={genre}
-              onClick={() => setSelectedGenre(genre.toLowerCase())}
-              className={`px-4 py-2 rounded-full ${
-                selectedGenre === genre.toLowerCase()
-                  ? 'bg-orange-500 text-white'
-                  : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
-              }`}
-            >
-              {genre}
+        <button
+          onClick={handleSearch}
+          className="search-button"
+          disabled={searching}
+        >
+          {searching ? 'Searching...' : 'Search'}
             </button>
-          ))}
-        </div>
+    </div>
+
+      {searching && (
+        <div className="loading-indicator">
+          <div className="loader"></div>
+          <span>Searching for songs...</span>
+      </div>
+      )}
+
+      <div className="results-container">
+        {results.map((result, index) => (
+          <div key={index} className="result-item">
+            <div className="result-header">
+              <h3>{cleanFileName(result.songData.filename)}</h3>
+              <span className="similarity-score">
+                Match: {(result.similarity * 100).toFixed(1)}%
+              </span>
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-        {MOCK_SEARCH_RESULTS.map(track => (
-          <TrackCard key={track.id} track={track} />
+            <div className="audio-player">
+              <audio
+                controls
+                preload="metadata"
+                src={`${serverUrl}/audio/${result.songData.audioFileId}`}
+              >
+                Your browser does not support the audio element.
+              </audio>
+              <a
+                href={`${serverUrl}/audio/${result.songData.audioFileId}?download=true`}
+                className="download-button"
+                download
+              >
+                Download
+              </a>
+    </div>
+
+            {result.songData.keywords && result.songData.keywords.length > 0 && (
+              <div className="tags-section">
+                <strong>Keywords:</strong>
+                <div className="tags">
+                  {result.songData.keywords.map((keyword, i) => (
+                    <span key={i} className="tag">{keyword}</span>
+                  ))}
+                </div>
+              </div>
+            )}
+
+            {result.songData.ddex_moods && result.songData.ddex_moods.length > 0 && (
+              <div className="tags-section">
+                <strong>Moods:</strong>
+                <div className="tags">
+                  {result.songData.ddex_moods.map((mood, i) => (
+                    <span key={i} className="tag mood-tag">{mood}</span>
+                  ))}
+                </div>
+              </div>
+            )}
+
+            {result.songData.summary && (
+              <div className="summary-section">
+                <strong>Summary:</strong>
+                <p>{result.songData.summary}</p>
+              </div>
+            )}
+          </div>
         ))}
+
+        {results.length === 0 && !searching && searchQuery && (
+          <div className="no-results">
+            No results found for "{searchQuery}"
+          </div>
+        )}
       </div>
     </div>
   );
-};
-
+}
 export default Search;

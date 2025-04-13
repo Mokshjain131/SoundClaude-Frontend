@@ -1,5 +1,5 @@
 import React from 'react';
-import '@/styles/WaveForm.css';
+import './WaveForm.css';
 
 const WaveForm = ({ waveformData, progress }) => {
   if (!waveformData || waveformData.length === 0) {
@@ -9,7 +9,7 @@ const WaveForm = ({ waveformData, progress }) => {
   return (
     <div className="waveform">
       {waveformData.map((value, index) => {
-        const barHeight = Math.max(value * 100, 3); // Ensure minimum height
+        const barHeight = Math.max(value * 100, 3);
         const isPlayed = (index / waveformData.length) < progress;
         
         return (

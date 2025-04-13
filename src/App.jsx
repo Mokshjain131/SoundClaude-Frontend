@@ -1,28 +1,25 @@
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Navbar from './components/Navbar';
-import Player from './components/Player';
-import Home from './pages/Home';
-import Search from './pages/Search';
 import Upload from './pages/Upload';
+import Search from './pages/Search';
 import Profile from './pages/Profile';
 import Auth from './pages/Auth';
 
 function App() {
   return (
     <Router>
-      <div className="min-h-screen" style={{ backgroundColor: 'var(--color-gray-50)' }}>
+      <div className="app">
         <Navbar />
-        <main className="main container">
+        <main className="main-content">
           <Routes>
-            <Route path="/" element={<Home />} />
-            <Route path="/search" element={<Search />} />
+            <Route path="/" element={<Search />} />
             <Route path="/upload" element={<Upload />} />
+            <Route path="/search" element={<Search />} />
             <Route path="/profile" element={<Profile />} />
             <Route path="/auth" element={<Auth />} />
           </Routes>
         </main>
-        <Player />
       </div>
     </Router>
   );
