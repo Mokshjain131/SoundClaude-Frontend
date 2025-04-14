@@ -233,6 +233,7 @@ a {
   display: flex;
   align-items: flex-start;
   justify-content: space-between;
+  margin-top: 1.5rem;
 }
 
 .track-card-title {

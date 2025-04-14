@@ -7,6 +7,10 @@
   width: 100%;
 }
 
+.tracks-grid {
+  margin-bottom: 1rem;
+}
+
 .track-card-image-container {
   position: relative;
   aspect-ratio: 16/9;
