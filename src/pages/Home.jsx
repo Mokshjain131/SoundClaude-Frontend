@@ -7,7 +7,7 @@ function Home() {
   return (
     <div style={{ display: 'flex', flexDirection: 'column', minHeight: '100vh' }}>
     <div className="home">
-        {/* Hero Section */}
+
       <section className="hero-section">
         <h1>Welcome to SoundWave</h1>
         <p className="hero-description">
@@ -15,7 +15,6 @@ function Home() {
         </p>
       </section>
 
-        {/* Features Section */}
       <section className="features-section">
         <h2>Features</h2>
         <div className="features-grid">
@@ -33,7 +32,6 @@ function Home() {
           </div>
       </section>
 
-        {/* About Section */}
       <section className="about-section">
         <h2>About SoundWave</h2>
         <p>
@@ -43,7 +41,6 @@ function Home() {
         </p>
       </section>
 
-        {/* Getting Started Section */}
         <section className="getting-started-section">
           <h2>Getting Started</h2>
           <div className="steps-container">

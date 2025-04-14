@@ -13,7 +13,7 @@ const SearchBar = ({ value, onChange, placeholder = "Search for tracks..." }) =>
         value={value}
         onChange={(e) => onChange(e.target.value)}
         />
-            </div>
+    </div>
   );
 };
 
