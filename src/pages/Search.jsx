@@ -7,7 +7,7 @@ function Search() {
   const [searchQuery, setSearchQuery] = useState('');
   const [searching, setSearching] = useState(false);
   const [results, setResults] = useState([]);
-  const serverUrl = 'http://localhost:3000';
+  const serverUrl = 'https://soundclaude-backend.onrender.com';
 
   const handleSearch = async () => {
     if (!searchQuery.trim()) {

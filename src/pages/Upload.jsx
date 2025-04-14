@@ -7,7 +7,7 @@ function Upload() {
   const [loading, setLoading] = useState(false);
   const [result, setResult] = useState(null);
   const [fileNameDisplay, setFileNameDisplay] = useState('');
-  const serverUrl = 'http://localhost:3000';
+  const serverUrl = 'https://soundclaude-backend.onrender.com';
 
   const handleFileChange = (event) => {
     const fileInput = event.target;
